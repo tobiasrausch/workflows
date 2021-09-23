@@ -1,0 +1,49 @@
+SAMPLES = ["A", "B"]
+
+rule all:
+     input:
+        "plots/quals.svg"
+
+rule bwa_index:
+     input:
+        genome="../data/genome.fa"
+     output:
+        "../data/genome.fa.bwt"
+     shell:
+        "bwa index {input.genome}"
+
+rule bwa_map:
+     input:
+        genome="../data/genome.fa",
+	index="../data/genome.fa.bwt",
+        fq="../data/samples/{sample}.fastq.gz"
+     output:
+        "mapped_reads/{sample}.bam"
+     shell:
+        "bwa mem {input.genome} {input.fq} | samtools sort -o {output}"
+
+rule samtools_index:
+     input:
+        "mapped_reads/{sample}.bam"
+     output:
+        "mapped_reads/{sample}.bam.bai"
+     shell:
+        "samtools index {input}"
+
+rule bcftools_call:
+     input:
+        fa="../data/genome.fa",
+	bam=expand("mapped_reads/{sample}.bam", sample=SAMPLES),
+	bai=expand("mapped_reads/{sample}.bam.bai", sample=SAMPLES)
+     output:
+        "calls/all.vcf"
+     shell:
+        "samtools mpileup -g -f {input.fa} {input.bam} | bcftools call -mv - > {output}"
+
+rule plot_quals:
+     input:
+        "calls/all.vcf"
+     output:
+        "plots/quals.svg"
+     script:
+        "scripts/plot-quals.py"
