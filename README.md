@@ -1,8 +1,8 @@
-# workflows
+# Workflows
 
 Just some simple workflow examples.
 
-# installation
+# Installation
 
 `make all`
 
@@ -14,7 +14,7 @@ Just some simple workflow examples.
 
 `cd nextflow/ && ./run.sh`
 
-# creadits
+# credits
 
 * [snakemake](https://snakemake.readthedocs.io/)
 
