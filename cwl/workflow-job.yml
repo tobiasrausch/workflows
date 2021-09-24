@@ -1,0 +1,7 @@
+genome:
+  class: File
+  path: ../data/genome.fa
+fastq:
+  class: File
+  path: ../data/samples/A.fastq.gz
+outname: out.bam
