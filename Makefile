@@ -13,7 +13,7 @@ all:   	$(TARGETS)
 	export PATH=${PBASE}/conda/bin:${PATH} && conda install -y -n base -c conda-forge mamba && touch .mamba
 
 .install: .conda .mamba
-	export PATH=${PBASE}/conda/bin:${PATH} && source activate base && mamba create -y -c conda-forge -c bioconda -n workflows nextflow snakemake networkx matplotlib graphviz bcftools samtools bwa pysam && touch .install
+	export PATH=${PBASE}/conda/bin:${PATH} && source activate base && mamba create -y -c conda-forge -c bioconda -n workflows cwltool nextflow snakemake networkx matplotlib graphviz bcftools samtools bwa pysam && touch .install
 
 .test: .conda .mamba .install
 	export PATH=${PBASE}/conda/bin:${PATH} && source activate workflows && snakemake --version && nextflow -v && touch .test

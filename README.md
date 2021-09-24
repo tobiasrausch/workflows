@@ -1,8 +1,8 @@
-# Workflows
+# workflows
 
 Just some simple workflow examples.
 
-# Installation
+# installation
 
 `make all`
 
@@ -14,8 +14,14 @@ Just some simple workflow examples.
 
 `cd nextflow/ && ./run.sh`
 
+# CWL workflow
+
+`cd cwl/ && ./run.sh`
+
 # credits
 
 * [snakemake](https://snakemake.readthedocs.io/)
 
 * [nextflow](https://www.nextflow.io/)
+
+* [Common Workflow Language (CWL)](https://www.commonwl.org/)
