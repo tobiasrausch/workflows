@@ -12,4 +12,9 @@ inputs:
     type: File
     inputBinding:
       position: 2
-outputs: []
+outputs:
+  out_bam:
+    type: File
+    outputBinding:
+      glob: "$(inputs.outputBam)"
+

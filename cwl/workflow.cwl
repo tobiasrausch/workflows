@@ -2,31 +2,30 @@
 
 cwlVersion: v1.0
 class: Workflow
+
 inputs:
   genome: File
-  fastq: File
-  outname: string
-outputs: []
+  fastq: File[]
+  outname: string[]
+
+requirements:
+  SubworkflowFeatureRequirement: {}
+  ScatterFeatureRequirement: {}
 
 steps:
-  bwaindex:
-    run: bwa-index.cwl
+  alignment:
+    run: alignment.cwl
+    scatter: [fastq, outname]
+    scatterMethod: dotproduct
     in:
-      genomeFile: genome
-    out:
-      - index_file
+      genome: genome
+      fastq: fastq
+      outname: outname
+    out: [out_bam]
 
-  bwamap:
-    run: bwa-map.cwl
-    in:
-      genomeFile: bwaindex/index_file
-      fastqFile: fastq
-    out:
-      - reads_out
-
-  samtools-sort:
-    run: samtools-sort.cwl
-    in:
-      outputBam: outname
-      inputSam: bwamap/reads_out
-    out: []
+outputs:
+  out_bam:
+    type:
+      type: array
+      items: File
+    outputSource: alignment/out_bam

@@ -2,6 +2,8 @@ genome:
   class: File
   path: ../data/genome.fa
 fastq:
-  class: File
-  path: ../data/samples/A.fastq.gz
-outname: out.bam
+  - {class: File, path: ../data/samples/A.fastq.gz}
+  - {class: File, path: ../data/samples/B.fastq.gz}
+outname:
+  - A.bam
+  - B.bam
