@@ -19,7 +19,7 @@ all:   	$(TARGETS)
 	export PATH=${PBASE}/conda/bin:${PATH} && source activate workflows && snakemake --version && nextflow -v && touch .test
 
 clean:
-	rm -rf snakemake/calls/ snakemake/mapped_reads/ snakemake/plots/ data/genome.fa.* nextflow/work/ nextflow/.nextflow* snakemake/.snakemake*
+	rm -rf snakemake/calls/ snakemake/mapped_reads/ snakemake/plots/ data/genome.fa.* nextflow/work/ nextflow/.nextflow* snakemake/.snakemake* nextflow/calls/
 
 distclean: clean
 	rm -rf $(TARGETS) $(TARGETS:=.o) conda/

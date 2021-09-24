@@ -25,12 +25,31 @@ process bwa_map {
    path index from genomeidx
 
    output:
-   file "${infile.getBaseName()}.bam" into out_bams
+   file "${infile.getBaseName()}.bam" into bam_files
+   file "${infile.getBaseName()}.bam.bai" into bai_files
 
    script:
    outname = infile.getBaseName()
    outname += ".bam"
    """
    bwa mem $genome $infile | samtools sort -o $outname
+   samtools index $outname
+   """
+}
+
+process bcftools_call {
+   publishDir "$baseDir/calls"
+
+   input:
+   path genome from params.genome
+   file bamFile from bam_files.collect()
+   file baiFile from bai_files.collect()
+
+   output:
+   file "all.vcf" into outvcf
+
+   script:
+   """
+   samtools mpileup -g -f $genome $bamFile | bcftools call -mv - > all.vcf
    """
 }
